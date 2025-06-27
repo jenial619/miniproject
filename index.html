@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Playlist</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input, button {
+    padding: 5px 10px;
+    margin: 5px;
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+}
+
+.inline {
+    display: inline;
+}
+</style>
+<body>
+    <h1>🎵 Music Playlist</h1>
+
+    <form action="/add" method="post">
+         <input type="text" name="id" placeholder="Song Id" required>
+        <input type="text" name="title" placeholder="Song Title" required>
+        <input type="text" name="artist" placeholder="Artist" required>
+        <button type="submit">Add Song</button>
+    </form>
+
+    <ul>
+        {% for song in playlist %}
+            <li>
+                <strong>{{ song.title }}</strong> by {{ song.artist }}
+                <form action="/update" method="post" class="inline">
+                    <input type="hidden" name="id" value="{{ song.id }}">
+                    <input type="text" name="title" value="{{ song.title }}">
+                    <input type="text" name="artist" value="{{ song.artist }}">
+                    <button type="submit">Update</button>
+                </form>
+                <form action="/delete" method="post" class="inline">
+                    <input type="hidden" name="id" value="{{ song.id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
